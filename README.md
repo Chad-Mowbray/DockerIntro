@@ -100,3 +100,24 @@ Everything works!  Docker created a nice isolated Python 2.7 file for us that we
 
 
 
+
+
+## Challenge
+
+For today's challenge we are going to create our own API using Docker.
+
+You already have the API built for you.  It is a simple Express server that returns a JSON object of colors.
+
+Create a Docker file that copies the server into your image, then run the container.  Can you get the JSON?  You will need to take a look at the Docker docs to find out how to map the container's internal port to an external port accessable on your local machine.
+
+/// Answer docker build -t colors-api .
+           docker run -p 8888:7777 -d colors-api:latest
+
+
+Once you can get the JSON, move on to part II
+
+### Part II
+Let's try and use the information we get from our docker container.  
+
+
+
