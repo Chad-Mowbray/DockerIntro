@@ -3,18 +3,6 @@ const axios = require('axios')
 let nunjucks  = require('nunjucks')
 
 
-const getColors = function() {
-
-    return new Promise( (resolve, reject) => {
-        axios.get("http://localhost:8888")
-        .then(response => {
-            resolve(response.data)
-        })
-
-    }).catch( err => console.error(err))
-
-  
-}
 
 const app = express()
 app.use(express.static('public'))
@@ -25,9 +13,24 @@ nunjucks.configure('public', {
 });
 
 
+const getColors = function() {
+
+    return new Promise( (resolve, reject) => {
+        axios.get("http://localhost:7777")
+        .then(response => {
+            resolve(response.data)
+        })
+
+    }).catch( err => console.error(err))
+
+  
+}
 
 
-app.get('/a', async (req, res) => {
+
+
+
+app.get('/', async (req, res) => {
 
     let data = await getColors()
 
@@ -41,10 +44,10 @@ app.get('/a', async (req, res) => {
             console.log(hex)
         }
     }
-    res.render("index.html", {"colorChoice": colorChoice, "hex": hex})
+    res.render("colors.html", {"colorChoice": colorChoice, "hex": hex})
 })
 
 
-app.listen(9999, "0.0.0.0");
-console.log(`Running on port 9999...`);
+app.listen(9000, "0.0.0.0");
+console.log(`Running on port 9000...`);
 

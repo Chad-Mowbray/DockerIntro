@@ -6,10 +6,10 @@ COPY package.json ./
 
 COPY server.js ./
 
-COPY /public ./public
+COPY /public /public
 
 RUN npm install
 
-EXPOSE 9999
+EXPOSE 9000
 
 CMD ["node", "server.js"]

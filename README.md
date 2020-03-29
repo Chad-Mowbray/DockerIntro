@@ -99,6 +99,7 @@ Now let's try running our file:
 Everything works!  Docker created a nice isolated Python 2.7 file for us that we can run from anywhere, regardless of our local environment.
 
 
+//showcase a bunch of commands (exec, etc.) 
 
 
 
