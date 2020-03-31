@@ -71,12 +71,20 @@ After Docker finishes building your image, you can take a look at it:
 docker images
 ```
 
-We should see it there just hanging out waiting to be run.  We can run our container and then poke around inside it:
+We should see it there, along with any other images you might have, just hanging out waiting to be run. Let's go ahead and run it:
+
+```bash
+docker run python-says-hi
+```
+
+Did it work?  That sure does seem like a lot of overhead just to print two words.  Maybe this is all just smoke and mirrors.
+
+Docker lets you run containers in a couple of different ways.  This time we'll run the container and keep it open so we can poke around inside it:
 
 ```bash
 docker run -it python-says-hi bash
 ```
-(We are telling docker to run the bash command in the container, so we can navigate the filestructure)
+The the "-it" options are commonly used when you want to interact with your container's files.  "bash" lets you run a shell so you actually have something to look at.
 
 Let's see if our program made it into the container.  If you ls, you should see something like this:
 
@@ -84,9 +92,17 @@ Let's see if our program made it into the container.  If you ls, you should see 
 
 Let's check what version of Python is running in our container:
 
+```bash
+python --version
+```
+
 ![python_version_container](readme/python_version_container.png)
 
 Now let's check what operating system is running in our container:
+
+```bash
+cat /etc/os-release
+```
 
 ![container_os](readme/container_os.png)
 
@@ -98,8 +114,69 @@ Now let's try running our file:
 
 Everything works!  Docker created a nice isolated Python 2.7 file for us that we can run from anywhere, regardless of our local environment.
 
+Another thing you might find useful is running containers in the background.  This allows you to do other things on your command line. In Docker this is called running in "detached" mode.
 
+```bash
+docker run -it -d python-says-hi bash
+```
 
+How do you know if it's really running?  Docker has a command for that too:
+
+```bash
+docker ps
+```
+
+As exciting as our application is, we are probably going to want to stop it at some point. There are a couple ways to reference the container you would like to stop.  The first uses the "name" (a somewhat random default name, unless you specify one):
+
+```bash
+docker stop charming_mendeleev
+```
+
+The second uses the "container id":
+
+```bash
+docker stop 73994029015d 
+```
+
+And if you're feeling especially lazy, you can just give the first two or three characters (as long as it enough to be unique among your containers):
+
+```bash
+docker stop 73 
+```
+
+OK, so far you can create a docker image from scratch using a Dockerfile, and then run your container.  Pretty impressive.  
+
+But you know, I've been thinking.  How do we know that our container is really running 2.7?  Maybe this is all a dream.
+
+Let's try a test.  We'll copy a new file into our container that has a print statement that uses Python 3 syntax, and see what happens.
+
+We first restart our container:
+
+```bash
+docker run -it -d python-says-hi bash
+```
+
+Then we copy our file into the directory we designated in the container:
+
+```bash
+docker cp ./hi_in_3.py eager_mendel:/usr/src/app
+```
+
+Then we will "exec" into our running container, so we can take a look around:
+
+```bash
+docker exec -it eager_mendel bash
+```
+
+This is just like what we did when we ran the container.  The difference is that we are now accessing the container while it's already running.
+
+If we ls, we should see our new file.  Let's run it and see what happens:
+
+![python2_error](readme/python2_error.png)
+
+Success!  Sort of.  It failed!  
+
+I think even the most sceptical mind should now be satisfied that Docker really is running a different thing.
 
 
 ## Challenge
@@ -118,6 +195,8 @@ Once you can get the JSON, move on to part II
 
 ### Part II
 Let's try and use the information we get from our docker container.  
+
+(Do you notice any problems with the dataset you are using?  -- yellow )
 
 
 

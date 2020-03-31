@@ -6,10 +6,8 @@ COPY package.json ./
 
 COPY server.js ./
 
-COPY /public ./public
+COPY /views ./views
 
 RUN npm install
-
-EXPOSE 9999
 
 CMD ["node", "server.js"]

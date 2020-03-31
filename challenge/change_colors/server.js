@@ -3,31 +3,26 @@ const axios = require('axios')
 let nunjucks  = require('nunjucks')
 
 
-const getColors = function() {
+const getColors = async function() {
 
     return new Promise( (resolve, reject) => {
-        axios.get("http://localhost:8888")
+        axios.get("http://localhost:7777")
         .then(response => {
             resolve(response.data)
         })
-
     }).catch( err => console.error(err))
-
-  
 }
 
 const app = express()
 app.use(express.static('public'))
 
-nunjucks.configure('public', {
+nunjucks.configure('views', {
     autoescape: true,
     express: app
 });
 
 
-
-
-app.get('/a', async (req, res) => {
+app.get('/', async (req, res) => {
 
     let data = await getColors()
 
