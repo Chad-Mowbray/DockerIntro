@@ -211,6 +211,10 @@ A user should be able to visit your page, and somehow choose a color (entering t
 
 Your color will be based on the information you get from the color server's JSON (you can use the hex or rgba values).
 
+The result might look something like this:
+
+![example](readme/example.png)
+
 
 
 
