@@ -23,7 +23,7 @@ This technology is called "containerization".  It comes from the shipping indust
 
 Docker puts your application in a self-sufficient "container" that will run the same anywhere.  As long as your machine has Docker, you don't need to worry about what version of Python is installed.  You tell Docker everything your application needs to run, and the rest is taken care of.
 
-Most likely that sounds very abstract and complicated.  I would suggest not wasting too much time trying to wrap your head around the nuts and bolts.  We want to <i>use</i> it, and using it is pretty easy.
+Most likely that sounds very abstract and complicated.  I would suggest not wasting too much time trying to wrap your head around the nuts and bolts.  We want to <i>use</i> it, and using it is surprisingly easy.
 
 How does Docker know what our application needs to run?  Quite simply, use a Dockerfile to tell it.  Here is what a very basic Dockerfile looks like:
 
@@ -31,11 +31,11 @@ How does Docker know what our application needs to run?  Quite simply, use a Doc
 
 Not too bad, right?
 
-The "FROM" tells Docker which image to start out with.
-The "WORKDIR" tells Docker where in the container to run commands.
+The "FROM" command tells Docker which image to start out with.
+The "WORKDIR" command tells Docker where in the container to run commands.
 (NOTE: "image" is like a class and "container" is like an instance)
-The "COPY" tells Docker to copy whatever is in our current local directory into the Docker container (this would be our program)
-The "CMD" tells Docker what command to run in our container to get things started off
+The "COPY" command tells Docker to copy whatever is in our current local directory into the Docker container (this would be our program)
+The "CMD" command tells Docker what command to run in our container to get things started off
 
 In other words, we are saying, "Hey Docker, I'd like to have a container that runs Python 2.7.  Once you get that ready, go ahead and prepare to run some commands from /usr/src/app.  Then I'd like you to copy all the files that are in my current directory into /usr/src/app in the container.  Finally, if you would be so kind, please have Python run the file that you just copied /usr/src/app/hi.py"
 
@@ -126,6 +126,12 @@ How do you know if it's really running?  Docker has a command for that too:
 docker ps
 ```
 
+"docker ps" lists out all of the currently running containers on your machine.  If you want to see all the containers on your machine, including ones that aren't currently running, you can add the "-a" flag.
+
+```bash
+docker ps -a
+```
+
 As exciting as our application is, we are probably going to want to stop it at some point. There are a couple ways to reference the container you would like to stop.  The first uses the "name" (a somewhat random default name, unless you specify one):
 
 ```bash
@@ -181,11 +187,16 @@ I think even the most sceptical mind should now be satisfied that Docker really 
 
 ## Challenge
 
-For today's challenge we are going to create our own API using Docker.
+#### Part I: Dockerized Color Server
+For today's challenge we are going to create our own API using Docker.  This kind of thing might come in handy when you are developing an application.
 
-You already have the API built for you.  It is a simple Express server that returns a JSON object of colors.
+You already have the JSON object built for you (colors.json).  Create a simple server whose only job is to return that JSON object.  Use whatever means you like.
 
-Create a Docker file that copies the server into your image, then run the container.  Can you get the JSON?  You will need to take a look at the Docker docs to find out how to map the container's internal port to an external port accessable on your local machine.
+Once you have your server working, you will need to build it into a docker image.
+
+Create a Docker file that starts by pulling an appropriate base image (think about what you need, then look on hub.docker.com for something that works), and then copies the server into your image. Finally, run the container.  
+
+Can you get the JSON?  You might need to take a look at the Docker docs to find out how to map the container's internal port to an external port accessable on your local machine.
 
 /// Answer docker build -t colors-api .
            docker run -p 8888:7777 -d colors-api:latest
@@ -193,10 +204,13 @@ Create a Docker file that copies the server into your image, then run the contai
 
 Once you can get the JSON, move on to part II
 
-### Part II
-Let's try and use the information we get from our docker container.  
+#### Part II
+Let's try and use the information we get from our docker container.  You will need to wite another server that makes an API call to your Dockerized color server.  
 
-(Do you notice any problems with the dataset you are using?  -- yellow )
+A user should be able to visit your page, and somehow choose a color (entering text, clicking a button, selecting from a dropdown...).  When the user chooses a color, the page should somehow display that color (change background color, change text color...).  
+
+Your color will be based on the information you get from the color server's JSON (you can use the hex or rgba values).
+
 
 
 
