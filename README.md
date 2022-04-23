@@ -19,7 +19,7 @@ Fortunately there is something out there that can solve this problem for us: Doc
 
 Docker basically takes your program and wraps it up in everything it needs to run.  So wherever you run it, it has everything that it needs. 
 
-This technology is called "containerization".  It comes from the shipping industry, where everything is shipped in uniform containers.  That way, the people shipping it only have to worry about the outermost layer.  The tanker captain doesn't care if the shipping container is full of rice, teddy bears, or farm equipment-- they all stack the same way.
+This technology is called "containerization".  The metaphor comes from the shipping industry, where everything is shipped in uniform containers.  That way, the people shipping it only have to worry about the outermost layer.  The tanker captain doesn't care if the shipping container is full of rice, teddy bears, or farm equipment-- they all stack the same way.
 
 Docker puts your application in a self-sufficient "container" that will run the same anywhere.  As long as your machine has Docker, you don't need to worry about what version of Python is installed.  You tell Docker everything your application needs to run, and the rest is taken care of.
 
